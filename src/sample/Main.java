@@ -18,8 +18,8 @@ public class Main extends Application {
     //signal genetation
     public static double[] signalGeneration() {
         Random rand = new Random();
-        int Phi[] = new int[nGarm];
-        int Amp[] = new int[nGarm];
+        int[] Phi = new int[nGarm];
+        int[] Amp = new int[nGarm];
         for (int i = 0; i < nGarm; i++) {
             Phi[i] = rand.nextInt(360) + 1;
             Amp[i] = rand.nextInt(10) + 1;
@@ -38,12 +38,15 @@ public class Main extends Application {
         double[] XRe = new double[nDiscr];
         double[] XIm = new double[nDiscr];
         double[] X = new double[nDiscr];
+        long start = System.nanoTime();
         for (int p = 0; p < nDiscr; p++)
             for (int k = 0; k < nDiscr; k++) {
                 XRe[p] += x[k] * cos(2 * PI * p * k / nDiscr);
                 XIm[p] += x[k] * sin(2 * PI * p * k / nDiscr);
             }
-
+        long finish = System.nanoTime();
+        long timeElapsed = finish - start;
+        System.out.println("Elapsed time: " + timeElapsed/pow(10,6) + " milliseconds");
         for (int p = 0; p < nDiscr; p++) {
             X[p] = sqrt(pow(XRe[p], 2) + pow(XIm[p], 2));
         }
